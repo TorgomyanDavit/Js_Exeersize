@@ -1212,6 +1212,7 @@
 
 /**Ստանալ մեծ կղզի - Ֆանտաստիկ վարժություն */ 
 
+
 // let input3 = [
 //     [0,1,0,0,1],
 //     [0,1,0,0,1],
@@ -1235,16 +1236,16 @@
 //     let {islandOr_Water} = data
 //     for (let Row = 0; Row < board.length; Row++) {
 //         const Line = board[Row];
-//         for (let i = 0; i < Line.length; i++) {
-//             const value = Line[i];
+//         for (let line_Index = 0; line_Index < Line.length; line_Index++) {
+//             const value = Line[line_Index];
             
 //             if(value === islandOr_Water && islandOr_Water === 1) {
-//                 findNeighbor(board,Row,i);data.id++
+//                 findNeighbor(board,Row,line_Index);data.id++
 //             } 
 
 //             if(value === islandOr_Water && islandOr_Water === 0) {
 //                 data.identify = null
-//                 computeSizePositive(board,Row,i);
+//                 computeSizePositive(board,Row,line_Index);
 //             } 
 //         }
 //     }
@@ -1263,30 +1264,30 @@
 //     if( board[Row] && board[Row][i] ) data.length = 1
 // }
 
-// function findNeighbor(board,Row,i) {
+// function findNeighbor(board,Row,line_Index) {
 //     let {islandOr_Water} = data
     
-//     let neighbour = board[Row] && board[Row][i]
-//     if(Row >= 0 && i >= 0 && neighbour === 1) {
-//         addIslandTo_Data(board,Row,i)
+//     let neighbour = board[Row] && board[Row][line_Index]
+//     if(Row >= 0 && line_Index >= 0 && neighbour === 1) {
+//         addIslandTo_Data(board,Row,line_Index)
 //     }
 
-//     neighbour = board[Row] && (board[Row][i] > 1)
-//     if(Row >= 0 && i >= 0 && !!neighbour === true && islandOr_Water === 0) {
-//         computeGreatIslind(board,Row,i)
+//     neighbour = board[Row] && (board[Row][line_Index] > 1)
+//     if(Row >= 0 && line_Index >= 0 && !!neighbour === true && islandOr_Water === 0) {
+//         computeGreatIslind(board,Row,line_Index)
 //     }
 // }
 
-// function computeGreatIslind(board,Row,i) {
+// function computeGreatIslind(board,Row,line_Index) {
 //     let {islands,max,identify} = data
-//     let maxValue = islands[board[Row][i]] + 1 
-//     identify = board[Row][i]
+//     let maxValue = islands[board[Row][line_Index]] + 1 
+//     identify = board[Row][line_Index]
 //     if( data.identify === null ) {
-//         data.identify = board[Row][i]
+//         data.identify = board[Row][line_Index]
 //     }  
     
 //     if(data.identify !== identify){
-//         maxValue = islands[data.identify] + (islands[board[Row][i]] + 1)
+//         maxValue = islands[data.identify] + (islands[board[Row][line_Index]] + 1)
 //     } 
     
 //     if(maxValue > max) {
@@ -1294,12 +1295,12 @@
 //     }
 // }
 
-// function addIslandTo_Data(board,Row,i) {
+// function addIslandTo_Data(board,Row,line_Index) {
 //     let {islands,id,length} = data
-//     board[Row][i] = id
-//     islands[board[Row][i]] = length
+//     board[Row][line_Index] = id
+//     islands[board[Row][line_Index]] = length
 //     data.length++
-//     computeSizePositive(board,Row,i)
+//     computeSizePositive(board,Row,line_Index)
 // }
 
 // // Start Function 
@@ -1312,132 +1313,91 @@
 
 
 
-// const h1 = document.querySelector(".h1")
-// h1.style.color = "red"
 
 
 
 
 
 
+// Queen exersize, Թագուհիների խնդիրը
+// n-թագուհիների խնդիրը: 
+// n թագուհիներ տեղադրել n×n շախմատի տախտակի վրա այնպես, որ կամայական երկու թագուհիներ չհարձակվեն միմյանց վրա:
 
+// Մուտք. ամբողջ թիվ n
+// Արդյունք. Զանգված, որի ամեն էլեմենտը երկչափ զանգված է՝ n-թագուհիներ խնդրի բոլոր հստակ լուծումներով:
 
+// Զանգվածի Յուրաքանչյուր էլեմենտը պարունակում է n-թագուհիների տեղակայման տարբերակ, որտեղ 'Q' - թագուհի և '.' - դատարկ տարածություն:
 
+//  Օրինակ:
 
+//    Մուտքագրում: 4
+//    Արդյունք: [
+//     [
+//      ['.', 'Q', '.', '.'],
+//      ['.', '.', '.', 'Q'],
+//      ['Q', '.', '.', '.'],
+//      ['.', '.', 'Q', '.'],
+//     ],
+//     [
+//      ['.', '.', 'Q', '.'],
+//      ['Q', '.', '.', '.'],
+//      ['.', '.', '.', 'Q'],
+//      ['.', 'Q', '.', '.'],
+//     ]
+//    ]
 
 
+function nQueens(n) {
+  const results = [];
 
+  const board = Array.from({length: n}, () => Array.from({length: n}, () => "."));
+  const dfs = (row) => {
 
+    if (row === n) {
+      results.push(clone(board));
+    }
 
+    for (let col = 0; col < n; col++) {
+      if (isValid(row, col, board)) {
+        board[row][col] = 'Q';
+        dfs(row + 1);
+        board[row][col] = '.';
+      }
+    }
 
+  };
+  dfs(0);
 
+  return results;
+}
 
+function clone(val) {
+  return JSON.parse(JSON.stringify(val));
+}
 
+function isValid(row, col, board) {
+  const n = board.length;
 
+  for (let i = row - 1; i >= 0; i--) {
+    if (board[i][col] === 'Q') {
+      return false;
+    }
+  }
 
+  for (let i = row - 1, x = col + 1; i >= 0 && x < n; i--, x++) {
+    if (board[i][x] === 'Q') {
+      return false;
+    }
+  }
 
+  for (let i = row - 1, x = col - 1; i >= 0 && x >= 0; i--, x--) {
+    if (board[i][x] === 'Q') {
+      return false;
+    }
+  }
 
+  return true;
+}
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+console.log(nQueens(4));

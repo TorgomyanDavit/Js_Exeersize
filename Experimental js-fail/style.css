@@ -1,0 +1,36 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+
+
+
+
+.div {
+    width: 400px;
+    height: 400px;
+    text-align: center;
+    color: white;
+    font-size: 50px;
+    background: rgb(114, 94, 163);
+    display: inline-block;
+}
+
+.input {
+    
+    background: green;
+    margin: 0  !important;
+    color: wheat;
+    font-size: 40px;
+    margin-top: 0;
+    padding: 0;
+    outline: none;
+    border: none;
+}
+
+
+
+
+
